@@ -24,6 +24,7 @@
         《{{ shici.title }}》<br/>
         {{ shici.author }}
       </div>
+      <!--   访问板块   -->
       <div class="card-container" id="count-card">
         <span id="busuanzi_container_site_pv" style="display:none">本站总访问量<span id="busuanzi_value_site_pv"></span>次<span
             class="post-meta-divider"></span></span>
@@ -38,12 +39,12 @@
       <!--   文章   -->
       <div class="card-container">
         <b>文章</b>
-        <el-button :icon="Edit" circle @click="goEdit('0')" style="position: absolute;right: 5px"/>
+        <el-button :icon="Edit" circle @click="goEdit('0')" style="position: absolute;right: 5px" v-if="userInfo"/>
         <el-table v-loading="loading" :data="blogs" style="width: 100%" :show-header="false" @row-click="goContent">
           <el-table-column prop="title" min-width="100%"/>
           <el-table-column prop="fromTime" width="100%"/>
           <el-table-column prop="toTime" width="100%"/>
-          <el-table-column label="Operations" width="100%">
+          <el-table-column label="Operations" width="100%" v-if="userInfo">
             <template #default="scope">
               <el-button type="primary" :icon="Edit" circle @click="goEdit(scope.row.id)"/>
               <el-button type="danger" :icon="Delete" circle @click.stop="deleteBlog(scope.row.id)"/>
@@ -51,7 +52,7 @@
           </el-table-column>
         </el-table>
       </div>
-            <!--   音乐   -->
+      <!--   音乐   -->
       <div class="card-container" id="music-card"></div>
     </div>
   </div>
@@ -129,6 +130,10 @@ export default {
     const goContent = (row) => {
       router.push(`/blogcontent?id=${row.id}`)
     }
+    let userInfo = ref(null)
+    setTimeout(()=>{
+      userInfo.value = JSON.parse(sessionStorage.getItem("user"))
+    },1000)
 
     let ap;
     const getMusic = (sever, type, id) => {
@@ -144,7 +149,6 @@ export default {
             container: document.getElementById('music-card'),
           });
           getMusic('tencent', 'playlist', '1503048898')
-          // const jinrishici = require('jinrishici');
           jinrishici.load(result => {
             shici.value.content = result.data.content
             shici.value.title = result.data.origin.title
@@ -163,7 +167,8 @@ export default {
       blogs,
       deleteBlog,
       goEdit,
-      goContent
+      goContent,
+      userInfo
     }
   }
 }

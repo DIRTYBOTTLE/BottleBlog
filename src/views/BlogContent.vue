@@ -1,18 +1,18 @@
 <template>
   <div style="display: flex;flex-direction: column;align-items: center;background-color: whitesmoke">
-    <h1 align="center">{{ title }}</h1>
+    <h1 align="center" style="margin-left: 150px">{{ title }}</h1>
     <el-button @click="goHome" style="position: absolute;top: 0;left: 0">
       <el-icon>
         <HomeFilled/>
       </el-icon>
     </el-button>
-    <el-button @click="goEdit" style="position: absolute;top: 0;right: 0">
+    <el-button @click="goEdit" style="position: absolute;top: 0;right: 0" v-if="userInfo">
       <el-icon>
         <Edit/>
       </el-icon>
     </el-button>
     <Editor
-        style="height: calc(100vh - 46px); overflow-y: hidden; width: 65vw;"
+        style="height: calc(100vh - 46px); overflow-y: hidden; width: 65vw;margin-left: 150px"
         v-model="content"
         :defaultConfig="editorConfig"
         :mode="mode"
@@ -66,6 +66,7 @@ export default {
       editor.destroy()
     })
 
+
     const handleCreated = (editor) => {
       editor.disable()
       editorRef.value = editor // 记录 editor 实例，重要！
@@ -99,6 +100,11 @@ export default {
       router.push('/blogedit?id=' + id)
     }
 
+    let userInfo = ref({})
+    setTimeout(()=>{
+      userInfo.value = JSON.parse(sessionStorage.getItem("user"))
+    },1000)
+
     return {
       title,
       content,
@@ -110,7 +116,8 @@ export default {
       goHome,
       goEdit,
       handleChange,
-      lis
+      lis,
+      userInfo
     }
   }
 }
