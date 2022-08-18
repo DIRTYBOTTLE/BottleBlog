@@ -70,14 +70,10 @@
         <div class="video-list">
           <el-table v-loading="loading" :data="videos" style="width: 100%" :show-header="false" @row-click="changeVideo"
                     max-height="550">
-            <el-table-column prop="name" width="252"/>
-            <el-table-column label="Operations" width="60">
+            <el-table-column prop="name" min-width="100%"/>
+            <el-table-column label="Operations" width="40">
               <template #default="scope">
-<!--                <el-button type="primary" circle @click="goBiliBili(scope.row.bilibiliUrl)">-->
-<!--                  <el-icon><img src="../assets/home/IconGithub.png"></el-icon>-->
-
-<!--                </el-button>-->
-                <img src="../assets/home/bilibili.png" style="width: 30px" @click="goBiliBili(scope.row.bilibiliUrl)">
+                <img src="../assets/home/bilibili.png" style="width: 30px;position: absolute;left: 5px;top: 5px" @click="goBiliBili(scope.row.bilibiliUrl)">
               </template>
             </el-table-column>
           </el-table>
@@ -101,7 +97,7 @@ import 'aplayer/dist/APlayer.min.css';
 export default {
   name: "BottleBlog",
   setup() {
-    const avatarUrl = "https://avatars.githubusercontent.com/u/62377297?s=400&u=c09e0c16c7bc4fe961fb1738d5e42ad0a7cb4783&v=4"
+    const avatarUrl = "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.zhimg.com%2F50%2Fv2-c2886eb2e2511cf0b9b9bd8293fe3cb3_hd.jpg&refer=http%3A%2F%2Fpic1.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1661710743&t=7a5d3e13fc378f21f7f060039c4ae4f0w"
     const githubUrl = "https://github.com/DIRTYBOTTLE"
     const shici = ref({})
     const loading = ref(true)
@@ -222,32 +218,32 @@ export default {
 
     const videos = [{
       name: "但盼风雨来,能留你在此。",
-      videoUrl: "https://upos-sz-mirrorcos.bilivideo.com/upgcxcode/03/43/2114303/2114303_da3-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1660813334&gen=playurlv2&os=alibv&oi=1866715013&trid=1530b74bda534c1783344fb71087ffe1h&mid=0&platform=html5&upsig=c0be3e36f6702e03f5e8e347ee469a68&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=0&bw=52839&logo=80000000",
+      videoUrl: "http://cloud.jollybottle.plus/api/doc/download.do?uuid=a7120bc7-88c7-414c-92a0-aa7713ce5d0a",
       bilibiliUrl: "https://www.bilibili.com/video/BV11x411N72J?spm_id_from=333.999.0.0&vd_source=80fddc9c3c4c66da5e176cf3888d6113"
     },
       {
         name: "CLANNAD ~Luv Letter~",
-        videoUrl: "https://upos-sz-mirrorcos.bilivideo.com/upgcxcode/74/41/2144174/2144174_da3-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1660813792&gen=playurlv2&os=bcache&oi=1730664658&trid=0000e20677e89c6548fd80ea891a90f1f5d1h&mid=0&platform=html5&upsig=0851db65076daf4dc1b51ba53c9c02f8&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&cdnid=60910&bvc=vod&nettype=0&bw=53549&logo=80000000#vp",
+        videoUrl: "http://cloud.jollybottle.plus/api/doc/download.do?uuid=86454be4-4bff-4605-a4ec-92d00f9b9385",
         bilibiliUrl: "https://www.bilibili.com/video/BV1Fx411K7tj?spm_id_from=333.999.0.0&vd_source=80fddc9c3c4c66da5e176cf3888d6113"
       },
       {
         name: "风之明日",
-        videoUrl: "https://upos-sz-mirrorcos.bilivideo.com/upgcxcode/74/27/3172774/3172774_da3-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1660814508&gen=playurlv2&os=cosbv&oi=1962917291&trid=c3950d31e94741c7a92970bfb32fed2ah&mid=0&platform=html5&upsig=027b0faa284a46d955b14c625105c82d&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=0&bw=53143&logo=80000000#vp",
+        videoUrl: "http://cloud.jollybottle.plus/api/doc/download.do?uuid=c58d168b-43f6-49c7-9625-380bf60f6941",
         bilibiliUrl: "https://www.bilibili.com/video/BV1kx411A7cp?spm_id_from=333.999.0.0&vd_source=80fddc9c3c4c66da5e176cf3888d6113"
       },
       {
-        name: "画之声",
-        videoUrl: "https://upos-sz-mirrorcos.bilivideo.com/upgcxcode/26/32/9253226/9253226_da3-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1660814658&gen=playurlv2&os=cosbv&oi=1962917291&trid=3428da0742f54ebeba6e3bbbd767ada3h&mid=0&platform=html5&upsig=14360d6a10d4ddf3a733a8de39b13f17&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=0&bw=52992&logo=80000000#vp",
+        name: "画中声",
+        videoUrl: "http://cloud.jollybottle.plus/api/doc/download.do?uuid=853a99f0-e611-4163-ac3f-0af1d104ea17",
         bilibiliUrl: "https://www.bilibili.com/video/BV1ms411C7pm?spm_id_from=333.999.0.0&vd_source=80fddc9c3c4c66da5e176cf3888d6113"
       },
       {
         name: "LA LA LAND",
-        videoUrl: "https://upos-sz-mirrorcos.bilivideo.com/upgcxcode/65/61/28666165/28666165_da3-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1660814830&gen=playurlv2&os=cosbv&oi=1965193940&trid=5ffb6a662101425daae44094411959bah&mid=0&platform=html5&upsig=5d146410c1f80d4e58adbaa73f6bc958&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=0&bw=52865&logo=80000000#vp",
+        videoUrl: "http://cloud.jollybottle.plus/api/doc/download.do?uuid=b4e17efc-c092-49cd-a832-34ca753bd035",
         bilibiliUrl: "https://www.bilibili.com/video/BV1XW41187RA?spm_id_from=333.999.0.0&vd_source=80fddc9c3c4c66da5e176cf3888d6113"
       },
       {
-        name: "旁人之光",
-        videoUrl: "https://upos-sz-mirrorcos.bilivideo.com/upgcxcode/73/73/146417373/146417373-1-208.mp4?e=ig8euxZM2rNcNbKV7wdVhwdl7wdMhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&uipk=5&nbs=1&deadline=1660822174&gen=playurlv2&os=cosbv&oi=1866715013&trid=9d85efc2d5054affa1b96db990a89035T&mid=0&platform=html5&upsig=5130f64debcf725616a8ba2c848b7c4e&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=0&bw=407679&orderid=0,1&logo=80000000",
+        name: "渺小的我们",
+        videoUrl: "http://cloud.jollybottle.plus/api/doc/download.do?uuid=d6ee0f2c-ce54-42df-92dd-9168b26d0dba",
         bilibiliUrl: "https://www.bilibili.com/video/BV13741167ZP?spm_id_from=333.999.0.0&vd_source=80fddc9c3c4c66da5e176cf3888d6113"
       }
     ]
@@ -568,16 +564,20 @@ input[type='range']:focus::-ms-fill-upper {
 }
 
 .video-content {
-  width: 70%;
+  width: 80%;
 }
 
 .video-list {
   background-color: black;
-  width: 30%;
+  width: 20%;
 }
 
 :deep(.video-list .el-table) {
   color: white;
+}
+
+:deep(.video-list .el-table :hover) {
+  color: black;
 }
 
 :deep(.video-list .el-table__row) {
