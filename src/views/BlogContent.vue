@@ -1,29 +1,38 @@
 <template>
+  <!-- 内容区 -->
   <div style="display: flex;flex-direction: column;align-items: center;background-color: whitesmoke">
-    <h1 align="center" style="margin-left: 150px">{{ title }}</h1>
-    <el-button @click="goHome" style="position: absolute;top: 0;left: 0">
-      <el-icon>
-        <HomeFilled/>
-      </el-icon>
-    </el-button>
-    <el-button @click="goEdit" style="position: absolute;top: 0;right: 0" v-if="userInfo">
-      <el-icon>
-        <Edit/>
-      </el-icon>
-    </el-button>
+    <!--  标题  -->
+    <h1 align="center">{{ title }}</h1>
+    <!--  编辑器  -->
     <Editor
-        style="height: calc(100vh - 46px); overflow-y: hidden; width: 65vw;margin-left: 150px"
+        style="height: calc(100vh - 46px); overflow-y: hidden; width: 70vw;"
         v-model="content"
         :defaultConfig="editorConfig"
         :mode="mode"
         @onCreated="handleCreated"
         @onChange="handleChange"
     />
-    <div style="width: 250px;position: absolute;left: 0;top: 40px">
-      <ul id="header-container">
-        <li v-for="item in lis" :id="item.id" :type="item.type">{{ item.text }}</li>
-      </ul>
-    </div>
+  </div>
+  <!--  目录  -->
+  <div class="lis" v-show="lisShow">
+    <ul id="header-container">
+      <li v-for="item in lis" :id="item.id" :type="item.type">{{ item.text }}</li>
+    </ul>
+  </div>
+  <!-- 按钮组 -->
+  <div class="btnGroup">
+    <!--  目录按钮  -->
+    <button class="btn" id="lisBtn">
+      <i class="fa fa-align-left fa-2x"></i>
+    </button>
+    <!--  编辑按钮  -->
+    <button class="btn" v-show="editBtnShow" @click="goEdit">
+      <i class="fa fa-pencil fa-2x"></i>
+    </button>
+    <!--  返回按钮  -->
+    <button class="btn" @click="goHome">
+      <i class="fa fa-chevron-left fa-2x"></i>
+    </button>
   </div>
 </template>
 
@@ -31,7 +40,7 @@
 import {useRoute, useRouter} from 'vue-router'
 import axios from "axios";
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import {onBeforeUnmount, ref, shallowRef} from 'vue'
+import {onBeforeUnmount, onMounted, ref, shallowRef} from 'vue'
 import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
 import {HomeFilled, Edit} from "@element-plus/icons-vue";
 import {SlateNode} from '@wangeditor/editor'
@@ -70,10 +79,10 @@ export default {
     const handleCreated = (editor) => {
       editor.disable()
       editorRef.value = editor // 记录 editor 实例，重要！
-
     }
 
     const lis = ref([])
+    const lisShow = ref(false)
     const handleChange = (editor) => {
       lis.value = []
       const headers = editorRef.value.getElemsByTypePrefix('header')
@@ -100,10 +109,23 @@ export default {
       router.push('/blogedit?id=' + id)
     }
 
-    let userInfo = ref({})
-    setTimeout(()=>{
+    let userInfo = ref(null)
+    const editBtnShow = ref(false)
+    setTimeout(() => {
       userInfo.value = JSON.parse(sessionStorage.getItem("user"))
-    },1000)
+      if (userInfo.value) {
+        if (userInfo.value.id === 1) {
+          editBtnShow.value = true
+        }
+      }
+    }, 1000)
+
+    onMounted(() => {
+      const lisBtn = document.getElementById("lisBtn")
+      lisBtn.addEventListener("click", () => {
+        lisShow.value = !lisShow.value
+      })
+    })
 
     return {
       title,
@@ -117,18 +139,45 @@ export default {
       goEdit,
       handleChange,
       lis,
-      userInfo
+      userInfo,
+      lisShow,
+      editBtnShow
     }
   }
 }
 </script>
 
 <style scoped>
+.btnGroup {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.btnGroup .btn {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.btnGroup .btn:hover {
+  background-color: #be2edd;
+}
+
+.lis {
+  width: 215px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-left: 5px;
+}
+
 #header-container {
   list-style-type: none;
-  padding-left: 20px;
-  height: calc(100vh - 46px);
   overflow-y: hidden;
+  height: 100vh;
 }
 
 #header-container:hover {

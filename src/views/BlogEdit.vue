@@ -1,24 +1,28 @@
 <template>
-  <span>
-    <el-input v-model="blogForm.title" placeholder="请键入标题" clearable input-style="text-align: center;">
-      <template #prepend>
-        <el-button @click="goHome">
-          <el-icon>
-            <HomeFilled/>
-          </el-icon>
-        </el-button>
-      </template>
-      <template #append>
-        <el-button @click="submit">
-          <el-icon>
-            <Upload/>
-          </el-icon>
-        </el-button>
-      </template>
-    </el-input>
-  </span>
-  <div style="border: 1px solid #ccc;height: calc( 100vh - 32px);
-  display: flex;flex-direction: column;align-items: center;background-color: whitesmoke">
+  <!--  <span>-->
+  <!--    <el-input v-model="blogForm.title" placeholder="请键入标题" clearable input-style="text-align: center;">-->
+  <!--      <template #prepend>-->
+  <!--        <el-button @click="goHome">-->
+  <!--          <el-icon>-->
+  <!--            <HomeFilled/>-->
+  <!--          </el-icon>-->
+  <!--        </el-button>-->
+  <!--      </template>-->
+  <!--      <template #append>-->
+  <!--        <el-button @click="submit">-->
+  <!--          <el-icon>-->
+  <!--            <Upload/>-->
+  <!--          </el-icon>-->
+  <!--        </el-button>-->
+  <!--      </template>-->
+  <!--    </el-input>-->
+  <!--  </span>-->
+
+  <!-- 标题栏 -->
+  <el-input v-model="blogForm.title" placeholder="请键入标题" input-style="text-align: center;"></el-input>
+  <!-- 工具栏和编辑器 -->
+  <div style="border: 1px solid #ccc;height: calc( 100vh - 32px);display: flex;
+      flex-direction: column;align-items: center;background-color: whitesmoke">
     <Toolbar
         style="border-bottom: 1px solid #ccc;width: 100vw"
         :editor="editorRef"
@@ -26,18 +30,34 @@
         :mode="mode"
     />
     <Editor
-        style="height: 100vh; overflow-y: hidden; width: 65vw;"
+        style="height: 100vh; overflow-y: hidden; width: 70vw;"
         v-model="blogForm.content"
         :defaultConfig="editorConfig"
         :mode="mode"
         @onCreated="handleCreated"
         @onChange="handleChange"
     />
-    <div style="width: 250px;position: absolute;left: 0;top: 75px;">
-      <ul id="header-container">
-        <li v-for="item in lis" :id="item.id" :type="item.type">{{ item.text }}</li>
-      </ul>
-    </div>
+  </div>
+  <!--  目录  -->
+  <div class="lis" v-show="lisShow">
+    <ul id="header-container">
+      <li v-for="item in lis" :id="item.id" :type="item.type">{{ item.text }}</li>
+    </ul>
+  </div>
+  <!-- 按钮组 -->
+  <div class="btnGroup">
+    <!--  上传按钮  -->
+    <button class="btn" @click="submit">
+      <i class="fa fa-arrow-up fa-2x"></i>
+    </button>
+    <!--  目录按钮  -->
+    <button class="btn" id="lisBtn">
+      <i class="fa fa-align-left fa-2x"></i>
+    </button>
+    <!--  返回按钮  -->
+    <button class="btn" @click="goHome">
+      <i class="fa fa-chevron-left fa-2x"></i>
+    </button>
   </div>
 </template>
 
@@ -77,6 +97,7 @@ export default {
       userId: JSON.parse(sessionStorage.getItem("user") || "{}").id
     })
 
+    const lisShow = ref(false)
     // 模拟 ajax 异步获取内容
     onMounted(() => {
       setTimeout(() => {
@@ -84,6 +105,10 @@ export default {
           getBlog(id)
         }
       }, 0)
+      const lisBtn = document.getElementById("lisBtn")
+      lisBtn.addEventListener("click", () => {
+        lisShow.value = !lisShow.value
+      })
     })
 
     const getBlog = (id) => {
@@ -145,7 +170,7 @@ export default {
       headers.map(header => {
         const text = SlateNode.string(header)
         const {id, type} = header
-        lis.value.push({id,type,text})
+        lis.value.push({id, type, text})
       })
     }
 
@@ -163,8 +188,12 @@ export default {
       headers.map(header => {
         const text = SlateNode.string(header)
         const {id, type} = header
-        lis.value.push({id,type,text})
+        lis.value.push({id, type, text})
       })
+    }
+
+    window.onbeforeunload = function () {
+      return "确定退出？"
     }
 
 
@@ -180,21 +209,47 @@ export default {
       handleCreated,
       goHome,
       lis,
-      handleChange
+      handleChange,
+      lisShow
     };
   }
 }
 </script>
 
 <style scoped>
-#header-container {
-  list-style-type: none;
-  padding-left: 20px;
-  height: calc(100vh - 80px);
-  overflow-y: hidden;
+.btnGroup {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-#header-container:hover{
+.btnGroup .btn {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 5px;
+  cursor: pointer;
+}
+
+.btnGroup .btn:hover {
+  background-color: #be2edd;
+}
+
+.lis {
+  width: 215px;
+  position: absolute;
+  left: 0;
+  top: 80px;
+  padding-left: 5px;
+}
+
+#header-container {
+  list-style-type: none;
+  overflow-y: hidden;
+  height: calc(100vh - 100px);
+}
+
+#header-container:hover {
   overflow-y: auto;
 }
 
