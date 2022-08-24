@@ -14,7 +14,7 @@
     />
   </div>
   <!--  目录  -->
-  <div class="lis" v-show="lisShow">
+  <div class="lis fade" id="lis">
     <ul id="header-container">
       <li v-for="item in lis" :id="item.id" :type="item.type">{{ item.text }}</li>
     </ul>
@@ -123,7 +123,12 @@ export default {
     onMounted(() => {
       const lisBtn = document.getElementById("lisBtn")
       lisBtn.addEventListener("click", () => {
-        lisShow.value = !lisShow.value
+        const lis = document.getElementById("lis")
+        if (lis.classList.contains("fade")) {
+          lis.classList.remove("fade")
+        } else {
+          lis.classList.add("fade")
+        }
       })
     })
 
@@ -148,6 +153,7 @@ export default {
 </script>
 
 <style scoped>
+
 .btnGroup {
   position: absolute;
   right: 0;
@@ -172,7 +178,34 @@ export default {
   left: 0;
   top: 0;
   padding-left: 5px;
+  /*animation-duration: 1s;*/
+  /*animation-name: lisAni;*/
+  transition: opacity 0.3s ease;
 }
+
+.lis.fade {
+  /*animation-duration: 1s;*/
+  /*animation-name: lisFadeAni;*/
+  opacity: 0;
+}
+
+/*@keyframes lisAni {*/
+/*  from {*/
+/*    opacity: 0;*/
+/*  }*/
+/*  to {*/
+/*    opacity: 1;*/
+/*  }*/
+/*}*/
+
+/*@keyframes lisFadeAni {*/
+/*  from {*/
+/*    opacity: 1;*/
+/*  }*/
+/*  to {*/
+/*    opacity: 0;*/
+/*  }*/
+/*}*/
 
 #header-container {
   list-style-type: none;
