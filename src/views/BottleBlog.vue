@@ -26,14 +26,14 @@
         {{ shici.author }}
       </div>
       <!--   访问板块   -->
-      <div class="card-container" id="count-card">
-        <span id="busuanzi_container_site_pv" style="display:none">本站总访问量<span id="busuanzi_value_site_pv"></span>次<span
-            class="post-meta-divider"></span></span>
-        <div>
-           <span id="busuanzi_container_site_uv" style="display:none">本站访客数<span
-               id="busuanzi_value_site_uv"></span>人</span>
-        </div>
-      </div>
+<!--      <div class="card-container" id="count-card">-->
+<!--        <span id="busuanzi_container_site_pv" style="display:none">本站总访问量<span id="busuanzi_value_site_pv"></span>次<span-->
+<!--            class="post-meta-divider"></span></span>-->
+<!--        <div>-->
+<!--           <span id="busuanzi_container_site_uv" style="display:none">本站访客数<span-->
+<!--               id="busuanzi_value_site_uv"></span>人</span>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
     <!--  内容区  -->
     <div id="right-side">
@@ -269,7 +269,7 @@ export default {
             shici.value.title = result.data.origin.title
             shici.value.author = result.data.origin.author
           });
-          require("busuanzi.pure.js");
+          // require("busuanzi.pure.js");
           const video = document.getElementById('video');
           video.addEventListener('canplay', () => {
             video.play()
