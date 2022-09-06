@@ -12,7 +12,7 @@
       <div class="card-container" id="introduce-card">
         <img :src="avatarUrl" style="width: 100px" alt="头像"/>
         <b>DirtyBottle</b>
-        <div style="text-align: center">轮子制造师、CV工程师</div>
+        <div style="text-align: center">轮子制造师、CV工程师<br>要理解递归，首先要理解递归</div>
         <div class="icon-item"><img :src="require('../assets/home/Icon学校.png')" alt="学校"/>武汉大学</div>
         <div class="icon-item"><img :src="require('../assets/home/Icon地区.png')" alt="地区"/>湖北,武汉</div>
         <div class="icon-item"><img :src="require('../assets/home/Icon邮箱.png')" alt="邮箱"/>479763003@qq.com</div>
